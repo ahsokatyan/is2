@@ -1,0 +1,180 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+<h:head>
+    <title>Управление городами</title>
+    <script src="#{request.contextPath}/js/websocket-updates.js"/>
+        <h:outputStylesheet library="css" name="styles.css"/>
+</h:head>
+
+<h:body>
+    <div class="container">
+        <h1>🏙️ Управление магическими городами</h1>
+
+        <!-- Навигация -->
+        <div class="section-bottom">
+            <h:form>
+                <h:commandButton value="🏠 Главная" action="#{navigationBean.goToHome}" styleClass="btn"/>
+                <h:commandButton value="📖 Существа" action="#{navigationBean.goToCreatures}" styleClass="btn"/>
+                <h:commandButton value="💍 Кольца" action="#{navigationBean.goToRings}" styleClass="btn"/>
+<!--                <h:link outcome="create-city" value="➕ Создать город" styleClass="btn btn-primary"/>-->
+            </h:form>
+        </div>
+
+        <!-- Сообщения об ошибках/успехе -->
+        <h:messages globalOnly="false" styleClass="messages" infoClass="success" errorClass="error"/>
+        <div class="card">
+            <h3>🔍 Поиск города по ID</h3>
+            <h:form>
+                <div class="inline-form">
+                    <h:inputText value="#{navigationBean.searchId}" required="true"
+                                 styleClass="input-short"
+                                 placeholder="Введите ID города"/>
+                    <h:commandButton value="Найти" action="#{navigationBean.searchCity}"
+                                     styleClass="btn btn-wide"/>
+                </div>
+            </h:form>
+        </div>
+        <!-- Форма создания нового города -->
+        <div class="section-bottom">
+            <h:link outcome="create-city" value="➕ Создать магический Город" styleClass="btn btn-primary btn-lg"/>
+        </div>
+
+        <!-- Фильтрация -->
+        <div class="card-muted">
+            <h3>🔍 Фильтрация городов</h3>
+            <h:form>
+                <div class="inline-form">
+                    <h:inputText value="#{magicCityListBean.filterName}"
+                                 styleClass="input-medium"
+                                 placeholder="Введите часть названия города"/>
+                    <h:commandButton value="🔍 Фильтровать"
+                                     action="#{magicCityListBean.filterCities}"
+                                     styleClass="btn btn-wide"/>
+                    <h:commandButton value="❌ Сброс"
+                                     action="#{magicCityListBean.resetFilter}"
+                                     styleClass="btn btn-wide"/>
+                </div>
+                <ui:fragment class="text-muted mt-10"
+                   rendered="#{magicCityListBean.filterName != null and magicCityListBean.filterName != ''}">
+                   Фильтр: "#{magicCityListBean.filterName}"
+                </ui:fragment>
+            </h:form>
+        </div>
+
+        <hr/>
+
+        <!-- Таблица городов -->
+        <h3>📋 Список городов (Всего: #{magicCityListBean.totalCount})</h3>
+
+        <h:form id="listForm">
+            <h:dataTable value="#{magicCityListBean.cities}" var="city" styleClass="table">
+                <h:column>
+                    <f:facet name="header">
+                        <h:commandLink action="#{magicCityListBean.sortBy('id')}" styleClass="sortable-link">
+                           ID#{magicCityListBean.getSortIndicator('id')}
+                        </h:commandLink>
+                    </f:facet>
+                    #{city.id}
+                </h:column>
+
+                <h:column>
+                    <f:facet name="header">
+                        <h:commandLink action="#{magicCityListBean.sortBy('name')}" styleClass="sortable-link">
+                           Название#{magicCityListBean.getSortIndicator('name')}
+                        </h:commandLink>
+                    </f:facet>
+                    #{city.name}
+                </h:column>
+
+                <h:column>
+                    <f:facet name="header">
+                        <h:commandLink action="#{magicCityListBean.sortBy('area')}" styleClass="sortable-link">
+                           Площадь#{magicCityListBean.getSortIndicator('area')}
+                        </h:commandLink>
+                    </f:facet>
+                    #{city.area}
+                </h:column>
+
+                <h:column>
+                    <f:facet name="header">
+                        <h:commandLink action="#{magicCityListBean.sortBy('population')}" styleClass="sortable-link">
+                           Население#{magicCityListBean.getSortIndicator('population')}
+                        </h:commandLink>
+                    </f:facet>
+                    #{city.population}
+                </h:column>
+
+                <h:column>
+                    <f:facet name="header">
+                        <h:commandLink action="#{magicCityListBean.sortBy('governor')}" styleClass="sortable-link">
+                           Правитель#{magicCityListBean.getSortIndicator('governor')}
+                        </h:commandLink>
+                    </f:facet>
+                    #{city.governor}
+                </h:column>
+
+                <h:column>
+                    <f:facet name="header">
+                        <h:commandLink action="#{magicCityListBean.sortBy('capital')}" styleClass="sortable-link">
+                           Столица#{magicCityListBean.getSortIndicator('capital')}
+                        </h:commandLink>
+                    </f:facet>
+                    <h:outputText value="Да" rendered="#{city.capital}"/>
+                    <h:outputText value="Нет" rendered="#{not city.capital}"/>
+                </h:column>
+
+                <h:column>
+                    <f:facet name="header">Действия</f:facet>
+                    <h:link outcome="view-city" value="👁️ Просмотр" styleClass="action-link">
+                        <f:param name="id" value="#{city.id}"/>
+                    </h:link>
+                    <h:link outcome="edit-city" value="✏️ Редакт." styleClass="action-link">
+                        <f:param name="id" value="#{city.id}"/>
+                    </h:link>
+                    <h:link outcome="delete-city" value="🗑️ Удалить">
+                        <f:param name="id" value="#{city.id}"/>
+                    </h:link>
+                </h:column>
+            </h:dataTable>
+
+            <!-- Пагинация -->
+            <div class="pagination">
+                <h:commandButton value="⏮️ Первая"
+                                 action="#{magicCityListBean.firstPage}"
+                                 disabled="#{magicCityListBean.currentPage == 1}"
+                                 styleClass="btn"/>
+
+                <h:commandButton value="◀️ Назад"
+                                 action="#{magicCityListBean.previousPage}"
+                                 disabled="#{magicCityListBean.currentPage == 1}"
+                                 styleClass="btn"/>
+
+                <span class="page-indicator">
+                    Страница #{magicCityListBean.currentPage} из #{magicCityListBean.totalPages}
+                </span>
+
+                <h:commandButton value="Вперед ▶️"
+                                 action="#{magicCityListBean.nextPage}"
+                                 disabled="#{magicCityListBean.currentPage >= magicCityListBean.totalPages}"
+                                 styleClass="btn"/>
+
+                <h:commandButton value="Последняя ⏭️"
+                                 action="#{magicCityListBean.lastPage}"
+                                 disabled="#{magicCityListBean.currentPage >= magicCityListBean.totalPages}"
+                                 styleClass="btn"/>
+
+                <div class="text-muted mt-10">
+                    Показано #{magicCityListBean.cities.size()} из #{magicCityListBean.totalCount} городов
+                    (по 20 на странице)
+                </div>
+            </div>
+        </h:form>
+    </div>
+</h:body>
+</html>
+

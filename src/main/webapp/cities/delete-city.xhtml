@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+
+<f:metadata>
+   <f:viewParam name="id" value="#{deleteMagicCityBean.cityId}"/>
+   <f:event type="preRenderView" listener="#{deleteMagicCityBean.loadCity}"/>
+</f:metadata>
+
+<h:head>
+   <title>Удаление города</title>
+      <h:outputStylesheet library="css" name="styles.css"/>
+</h:head>
+
+<h:body>
+   <div class="container-compact">
+      <h1>🗑️ Удаление города</h1>
+
+      <div class="section-bottom">
+         <h:link outcome="cities" value="← Назад к списку" styleClass="btn btn-secondary"/>
+      </div>
+
+      <h:messages/>
+
+      <ui:fragment rendered="#{deleteMagicCityBean.city != null}">
+         <div class="warning-box">
+            <h3>⚠️ Внимание!</h3>
+            <p>Вы собираетесь удалить город. Это действие нельзя отменить.</p>
+         </div>
+
+         <h3>Информация о городе:</h3>
+         <table class="details-table">
+            <tr>
+               <th>ID</th>
+               <td>#{deleteMagicCityBean.city.id}</td>
+            </tr>
+            <tr>
+               <th>Название</th>
+               <td>#{deleteMagicCityBean.city.name}</td>
+            </tr>
+            <tr>
+               <th>Площадь</th>
+               <td>#{deleteMagicCityBean.city.area}</td>
+            </tr>
+            <tr>
+               <th>Население</th>
+               <td>#{deleteMagicCityBean.city.population}</td>
+            </tr>
+            <tr>
+               <th>Правитель</th>
+               <td>#{deleteMagicCityBean.city.governor}</td>
+            </tr>
+         </table>
+
+         <h:form>
+            <h:commandButton value="✅ Подтвердить удаление"
+                             action="#{deleteMagicCityBean.initiateDeletion}"
+                             styleClass="btn btn-danger"/>
+
+            <h:link outcome="view-city" value="❌ Отмена" styleClass="btn btn-secondary">
+               <f:param name="id" value="#{deleteMagicCityBean.city.id}"/>
+            </h:link>
+         </h:form>
+      </ui:fragment>
+
+      <ui:fragment rendered="#{deleteMagicCityBean.city == null}">
+         <p class="text-danger">Город с ID #{deleteMagicCityBean.cityId} не найдено.</p>
+      </ui:fragment>
+   </div>
+
+   <!-- Диалог переселения существ -->
+   <h:form id="reassignmentDialogForm" rendered="#{deleteMagicCityBean.showDeleteDialog}">
+      <div class="dialog-overlay">
+         <div class="dialog-content">
+            <h2>🏙️ Переселение существ</h2>
+
+            <div class="info-box">
+               <p>В городе <strong>#{deleteMagicCityBean.city.name}</strong> проживает
+                  <strong>#{deleteMagicCityBean.deletionAnalysis.affectedCreaturesCount}</strong> существ.</p>
+               <p>Выберите новый город для переселения:</p>
+            </div>
+
+            <!-- Список существ в городе -->
+            <h4>🗺️ Существа в этом городе:</h4>
+            <div class="creature-list">
+               <ul>
+                  <ui:repeat value="#{deleteMagicCityBean.deletionAnalysis.affectedCreatures}" var="creature">
+                     <li>#{creature.name} (ID: #{creature.id})</li>
+                  </ui:repeat>
+               </ul>
+            </div>
+
+            <!-- Выбор нового города -->
+            <div class="section">
+               <h:outputLabel for="newCity" value="Выберите новый город для переселения:"/>
+               <h:selectOneMenu id="newCity" value="#{deleteMagicCityBean.selectedNewCityId}" >
+                  <f:selectItem itemLabel="-- Оставить без города --" itemValue=""/>
+                  <f:selectItems value="#{deleteMagicCityBean.deletionAnalysis.availableCities}"
+                                 var="availableCity"
+                                 itemLabel="#{availableCity.name} (ID: #{availableCity.id})"
+                                 itemValue="#{availableCity.id}"/>
+               </h:selectOneMenu>
+            </div>
+
+            <div class="section-top">
+               <h:commandButton value="✅ Подтвердить удаление с переселением"
+                                action="#{deleteMagicCityBean.performDeletion}"
+                                styleClass="btn btn-danger"/>
+
+               <h:commandButton value="❌ Отмена"
+                                action="#{deleteMagicCityBean.cancelDeletion}"
+                                styleClass="btn btn-secondary"/>
+            </div>
+         </div>
+      </div>
+   </h:form>
+</h:body>
+</html>
+

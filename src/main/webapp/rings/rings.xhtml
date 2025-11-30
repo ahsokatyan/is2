@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+
+<h:head>
+   <title>Управление кольцами</title>
+   <script src="#{request.contextPath}/js/websocket-updates.js"></script>
+      <h:outputStylesheet library="css" name="styles.css"/>
+</h:head>
+
+<h:body>
+   <div class="container">
+      <h1>💍 Управление магическими кольцами</h1>
+
+      <!-- Навигация -->
+      <div class="section-bottom">
+         <h:form>
+            <h:commandButton value="🏠 Главная" action="#{navigationBean.goToHome}" styleClass="btn"/>
+            <h:commandButton value="📖 Существа" action="#{navigationBean.goToCreatures}" styleClass="btn"/>
+            <h:commandButton value="🏙️ Города" action="#{navigationBean.goToCities}" styleClass="btn"/>
+<!--            <h:link outcome="create-ring" value="➕ Создать кольцо" styleClass="btn btn-primary"/>-->
+         </h:form>
+      </div>
+
+      <!-- Сообщения об ошибках/успехе -->
+      <h:messages globalOnly="false" styleClass="messages" infoClass="success" errorClass="error"/>
+      <div class="card">
+         <h3>🔍 Поиск кольца по ID</h3>
+         <h:form>
+            <div class="inline-form">
+               <h:inputText value="#{navigationBean.searchId}" required="true"
+                            styleClass="input-short"
+                            placeholder="Введите ID кольца"/>
+               <h:commandButton value="Найти" action="#{navigationBean.searchRing}"
+                                styleClass="btn btn-wide"/>
+            </div>
+         </h:form>
+      </div>
+      <!-- Форма создания нового существа -->
+      <div class="section-bottom">
+         <h:link outcome="create-ring" value="➕ Создать новое кольцо" styleClass="btn btn-primary btn-lg"/>
+      </div>
+
+      <!-- Фильтрация -->
+      <div class="card-muted">
+         <h3>🔍 Фильтрация колец</h3>
+         <h:form>
+            <div class="inline-form">
+               <h:inputText value="#{ringListBean.filterName}"
+                            styleClass="input-medium"
+                            placeholder="Введите часть названия кольца"/>
+               <h:commandButton value="🔍 Фильтровать"
+                                action="#{ringListBean.filterRings}"
+                                styleClass="btn btn-wide"/>
+               <h:commandButton value="❌ Сброс"
+                                action="#{ringListBean.resetFilter}"
+                                styleClass="btn btn-wide"/>
+            </div>
+            <ui:fragment class="text-muted mt-10"
+               rendered="#{ringListBean.filterName != null and ringListBean.filterName != ''}">
+               Фильтр: "#{ringListBean.filterName}"
+            </ui:fragment>
+         </h:form>
+      </div>
+
+      <hr/>
+
+      <!-- Таблица колец -->
+      <h3>📋 Список колец (Всего: #{ringListBean.totalCount})</h3>
+
+      <h:form id="listForm">
+         <h:dataTable value="#{ringListBean.rings}" var="ring" styleClass="table">
+            <h:column>
+               <f:facet name="header">
+                  <h:commandLink action="#{ringListBean.sortBy('id')}" styleClass="sortable-link">
+                     ID#{ringListBean.getSortIndicator('id')}
+                  </h:commandLink>
+               </f:facet>
+               #{ring.id}
+            </h:column>
+
+            <h:column>
+               <f:facet name="header">
+                  <h:commandLink action="#{ringListBean.sortBy('name')}" styleClass="sortable-link">
+                     Название#{ringListBean.getSortIndicator('name')}
+                  </h:commandLink>
+               </f:facet>
+               #{ring.name}
+            </h:column>
+
+            <h:column>
+               <f:facet name="header">
+                  <h:commandLink action="#{ringListBean.sortBy('power')}" styleClass="sortable-link">
+                     Сила#{ringListBean.getSortIndicator('power')}
+                  </h:commandLink>
+               </f:facet>
+               #{ring.power != null ? ring.power : 'Не указана'}
+            </h:column>
+
+            <h:column>
+               <f:facet name="header">
+                  <h:commandLink action="#{ringListBean.sortBy('weight')}" styleClass="sortable-link">
+                     Вес#{ringListBean.getSortIndicator('weight')}
+                  </h:commandLink>
+               </f:facet>
+               #{ring.weight}
+            </h:column>
+
+            <h:column>
+               <f:facet name="header">Действия</f:facet>
+               <h:link outcome="view-ring" value="👁️ Просмотр" styleClass="action-link">
+                  <f:param name="id" value="#{ring.id}"/>
+               </h:link>
+               <h:link outcome="edit-ring" value="✏️ Редакт." styleClass="action-link">
+                  <f:param name="id" value="#{ring.id}"/>
+               </h:link>
+               <h:link outcome="delete-ring" value="🗑️ Удалить">
+                  <f:param name="id" value="#{ring.id}"/>
+               </h:link>
+            </h:column>
+         </h:dataTable>
+
+         <!-- Пагинация -->
+         <div class="pagination">
+            <h:commandButton value="⏮️ Первая"
+                             action="#{ringListBean.firstPage}"
+                             disabled="#{ringListBean.currentPage == 1}"
+                             styleClass="btn"/>
+
+            <h:commandButton value="◀️ Назад"
+                             action="#{ringListBean.previousPage}"
+                             disabled="#{ringListBean.currentPage == 1}"
+                             styleClass="btn"/>
+
+            <span class="page-indicator">
+                    Страница #{ringListBean.currentPage} из #{ringListBean.totalPages}
+                </span>
+
+            <h:commandButton value="Вперед ▶️"
+                             action="#{ringListBean.nextPage}"
+                             disabled="#{ringListBean.currentPage >= ringListBean.totalPages}"
+                             styleClass="btn"/>
+
+            <h:commandButton value="Последняя ⏭️"
+                             action="#{ringListBean.lastPage}"
+                             disabled="#{ringListBean.currentPage >= ringListBean.totalPages}"
+                             styleClass="btn"/>
+
+            <div class="text-muted mt-10">
+               Показано #{ringListBean.rings.size()} из #{ringListBean.totalCount} колец
+               (по 20 на странице)
+            </div>
+         </div>
+      </h:form>
+   </div>
+</h:body>
+</html>
+
+

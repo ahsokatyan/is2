@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+
+<f:metadata>
+   <f:viewParam name="id" value="#{viewMagicCityBean.cityId}"/>
+   <f:event type="preRenderView" listener="#{viewMagicCityBean.loadCity}"/>
+</f:metadata>
+
+<h:head>
+   <title>Просмотр города</title>
+      <h:outputStylesheet library="css" name="styles.css"/>
+</h:head>
+
+<h:body>
+   <div class="container-compact">
+      <h1>🏙️ Просмотр города</h1>
+
+      <div class="section-bottom">
+         <h:link outcome="cities" value="← Назад к списку" styleClass="btn"/>
+      </div>
+
+      <h:messages styleClass="messages"/>
+
+      <ui:fragment rendered="#{viewMagicCityBean.city != null}">
+         <table class="details-table">
+            <tr>
+               <th>ID</th>
+               <td>#{viewMagicCityBean.city.id}</td>
+            </tr>
+            <tr>
+               <th>Название</th>
+               <td>#{viewMagicCityBean.city.name}</td>
+            </tr>
+            <tr>
+               <th>Площадь</th>
+               <td>#{viewMagicCityBean.city.area}</td>
+            </tr>
+            <tr>
+               <th>Население</th>
+               <td>#{viewMagicCityBean.city.population}</td>
+            </tr>
+            <tr>
+               <th>Плотность населения</th>
+               <td>#{viewMagicCityBean.city.populationDensity}</td>
+            </tr>
+            <tr>
+               <th>Правитель</th>
+               <td>#{viewMagicCityBean.city.governor}</td>
+            </tr>
+            <tr>
+               <th>Столица</th>
+               <td>
+                  <h:outputText value="Да" rendered="#{viewMagicCityBean.city.capital}"/>
+                  <h:outputText value="Нет" rendered="#{not viewMagicCityBean.city.capital}"/>
+               </td>
+            </tr>
+            <tr>
+               <th>Дата основания</th>
+               <td>#{viewMagicCityBean.city.establishmentDate}</td>
+            </tr>
+         </table>
+
+         <div class="section-top">
+            <h:link outcome="edit-city" value="✏️ Редактировать" styleClass="btn btn-primary">
+               <f:param name="id" value="#{viewMagicCityBean.city.id}"/>
+            </h:link>
+            <h:link outcome="delete-city" value="🗑️ Удалить" styleClass="btn btn-danger">
+               <f:param name="id" value="#{viewMagicCityBean.city.id}"/>
+            </h:link>
+         </div>
+      </ui:fragment>
+
+      <ui:fragment rendered="#{viewMagicCityBean.city == null}">
+         <p class="text-danger">Город с ID #{viewMagicCityBean.cityId} не найдено.</p>
+      </ui:fragment>
+   </div>
+</h:body>
+</html>
+
+

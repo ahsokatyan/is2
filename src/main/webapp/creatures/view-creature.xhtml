@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+<f:metadata>
+    <f:viewParam name="id" value="#{viewCreatureBean.creatureId}"/>
+    <f:event type="preRenderView" listener="#{viewCreatureBean.loadCreature}"/>
+</f:metadata>
+
+<h:head>
+    <title>Просмотр существа</title>
+        <h:outputStylesheet library="css" name="styles.css"/>
+</h:head>
+
+<h:body>
+    <div class="container-narrow">
+        <h1>👁️ Просмотр существа</h1>
+
+        <div class="section-bottom">
+            <h:link outcome="creatures" value="← Назад к списку" styleClass="btn"/>
+        </div>
+
+        <h:messages styleClass="messages"/>
+        <ui:fragment rendered="#{viewCreatureBean.creature != null}">
+        <div>
+            <table class="details-table">
+                <tr>
+                    <th>ID</th>
+                    <td>#{viewCreatureBean.creature.id}</td>
+                </tr>
+                <tr>
+                    <th>Имя</th>
+                    <td>#{viewCreatureBean.creature.name}</td>
+                </tr>
+                <tr>
+                    <th>Тип</th>
+                    <td>#{viewCreatureBean.creature.creatureType}</td>
+                </tr>
+                <tr>
+                    <th>Возраст</th>
+                    <td>#{viewCreatureBean.creature.age}</td>
+                </tr>
+                <tr>
+                    <th>Уровень атаки</th>
+                    <td>#{viewCreatureBean.creature.attackLevel}</td>
+                </tr>
+                <tr>
+                    <th>Координаты</th>
+                    <td>#{viewCreatureBean.creature.coordinates}</td>
+                </tr>
+                <tr>
+                    <th>Город</th>
+                    <td>#{viewCreatureBean.creature.creatureLocation}</td>
+                </tr>
+                <tr>
+                    <th>Кольцо</th>
+                    <td>#{viewCreatureBean.creature.ring}</td>
+                </tr>
+                <tr>
+                    <th>Дата создания</th>
+                    <td>#{viewCreatureBean.creature.creationDate}</td>
+                </tr>
+            </table>
+
+            <div class="section-top">
+                <h:link outcome="edit-creature" value="✏️ Редактировать" styleClass="btn btn-primary">
+                    <f:param name="id" value="#{viewCreatureBean.creature.id}"/>
+                </h:link>
+                <h:link outcome="delete-creature" value="🗑️ Удалить" styleClass="btn btn-danger">
+                    <f:param name="id" value="#{viewCreatureBean.creature.id}"/>
+                </h:link>
+            </div>
+        </div>
+        </ui:fragment>
+        <ui:fragment rendered="#{viewCreatureBean.creature == null}">
+            <p class="text-danger">Существо с ID #{viewCreatureBean.creatureId} не найдено.</p>
+        </ui:fragment>
+
+    </div>
+</h:body>
+</html>
+
+

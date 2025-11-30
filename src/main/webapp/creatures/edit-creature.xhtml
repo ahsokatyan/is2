@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+<f:metadata>
+   <f:viewParam name="id" value="#{editCreatureBean.creatureId}"/>
+   <f:event type="preRenderView" listener="#{editCreatureBean.loadCreature}"/>
+</f:metadata>
+
+<h:head>
+   <title>Редактирование существа</title>
+      <h:outputStylesheet library="css" name="styles.css"/>
+</h:head>
+
+<h:body>
+   <div class="container-narrow">
+      <h1>✏️ Редактирование существа</h1>
+
+      <div class="section-bottom">
+         <h:link outcome="creatures" value="← Назад к списку" styleClass="btn btn-secondary"/>
+      </div>
+
+      <h:messages styleClass="messages"/>
+
+      <ui:fragment rendered="#{editCreatureBean.creature != null}">
+      <div>
+         <h:form id="editForm">
+            <div class="form-grid">
+               <div class="form-group">
+                  <h:outputLabel for="name" value="Имя:"/>
+                  <h:inputText id="name" value="#{editCreatureBean.creature.name}" required="true" requiredMessage="Имя обязательно"/>
+               </div>
+
+               <div class="form-group">
+                  <h:outputLabel for="age" value="Возраст:"/>
+                  <h:inputText id="age" value="#{editCreatureBean.creature.age}" required="true">
+                     <f:validateLongRange minimum="1"/>
+                  </h:inputText>
+               </div>
+
+               <div class="form-group">
+                  <h:outputLabel for="attackLevel" value="Уровень атаки:"/>
+                  <h:inputText id="attackLevel" value="#{editCreatureBean.creature.attackLevel}" required="true">
+                     <f:validateLongRange minimum="1"/>
+                  </h:inputText>
+               </div>
+
+               <div class="form-group">
+                  <h:outputLabel for="creatureType" value="Тип существа:"/>
+                  <h:selectOneMenu id="creatureType" value="#{editCreatureBean.creature.creatureType}">
+                     <f:selectItem itemLabel="Выберите тип" itemValue=""/>
+                     <f:selectItem itemLabel="HOBBIT" itemValue="HOBBIT"/>
+                     <f:selectItem itemLabel="ELF" itemValue="ELF"/>
+                     <f:selectItem itemLabel="HUMAN" itemValue="HUMAN"/>
+                     <f:selectItem itemLabel="GOLLUM" itemValue="GOLLUM"/>
+                  </h:selectOneMenu>
+               </div>
+
+               <div class="form-group">
+                  <h:outputLabel for="x" value="Координата X:"/>
+                  <h:inputText id="x" value="#{editCreatureBean.creature.coordinates.x}" required="true">
+                     <f:validateDoubleRange minimum="-998.999"/>
+                  </h:inputText>
+               </div>
+
+               <div class="form-group">
+                  <h:outputLabel for="y" value="Координата Y:"/>
+                  <h:inputText id="y" value="#{editCreatureBean.creature.coordinates.y}" required="true">
+                     <f:validateLongRange minimum="-933"/>
+                  </h:inputText>
+               </div>
+            </div>
+
+            <div class="section-top">
+               <h:commandButton value="💾 Сохранить" action="#{editCreatureBean.updateCreature}" styleClass="btn btn-primary"/>
+               <h:link outcome="view-creature" value="❌ Отмена" styleClass="btn btn-secondary">
+                  <f:param name="id" value="#{editCreatureBean.creature.id}"/>
+               </h:link>
+            </div>
+         </h:form>
+      </div>
+      </ui:fragment>
+      <ui:fragment rendered="#{editCreatureBean.creature == null}">
+         <p class="text-danger">Существо с ID #{editCreatureBean.creatureId} не найдено.</p>
+      </ui:fragment>
+
+   </div>
+</h:body>
+</html>
+
+

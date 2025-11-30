@@ -8,17 +8,18 @@
 <f:view>
     <h:head>
         <title>Book Creature System</title>
+        <h:outputStylesheet library="css" name="styles.css"/>
     </h:head>
     <h:body>
         <h1>🏰 Система управления книжными существами</h1>
 
-        <div style="margin: 20px 0;">
+        <div class="section">
             <h:form>
-                <h:commandButton value="📖 Управление существами" action="#{navigationBean.goToCreatures}" style="margin: 5px; padding: 10px;"/>
-                <h:commandButton value="🏙️ Управление городами" action="#{navigationBean.goToCities}" style="margin: 5px; padding: 10px;"/>
-                <h:commandButton value="💍 Управление кольцами" action="#{navigationBean.goToRings}" style="margin: 5px; padding: 10px;"/>
+                <h:commandButton value="📖 Управление существами" action="#{navigationBean.goToCreatures}" styleClass="btn btn-lg"/>
+                <h:commandButton value="🏙️ Управление городами" action="#{navigationBean.goToCities}" styleClass="btn btn-lg"/>
+                <h:commandButton value="💍 Управление кольцами" action="#{navigationBean.goToRings}" styleClass="btn btn-lg"/>
                 <h:commandButton value="⚡ Специальные операции" action="#{navigationBean.goToSpecialOperations}"
-                                 style="margin: 5px; padding: 10px; background: #6f42c1; color: white;"/>
+                                 styleClass="btn btn-lg btn-accent"/>
             </h:form>
         </div>
 

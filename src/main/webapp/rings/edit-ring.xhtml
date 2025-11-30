@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+<f:metadata>
+   <f:viewParam name="id" value="#{editRingBean.ringId}"/>
+   <f:event type="preRenderView" listener="#{editRingBean.loadRing}"/>
+</f:metadata>
+
+<h:head>
+   <title>Редактирование кольца</title>
+      <h:outputStylesheet library="css" name="styles.css"/>
+</h:head>
+
+<h:body>
+   <div class="container-narrow">
+      <h1>✏️ Редактирование кольца</h1>
+
+      <div class="section-bottom">
+         <h:link outcome="rings" value="← Назад к списку" styleClass="btn btn-secondary"/>
+      </div>
+
+      <h:messages styleClass="messages"/>
+
+      <ui:fragment rendered="#{editRingBean.ring != null}">
+         <h:form id="editForm">
+            <div class="form-group">
+               <h:outputLabel for="name" value="Название:"/>
+               <h:inputText id="name" value="#{editRingBean.ring.name}" required="true" requiredMessage="Название обязательно"/>
+            </div>
+
+            <div class="form-group">
+               <h:outputLabel for="power" value="Сила:"/>
+               <h:inputText id="power" value="#{editRingBean.ring.power}">
+                  <f:validateLongRange minimum="1"/>
+               </h:inputText>
+            </div>
+
+            <div class="form-group">
+               <h:outputLabel for="weight" value="Вес:"/>
+               <h:inputText id="weight" value="#{editRingBean.ring.weight}" required="true">
+                  <f:validateDoubleRange minimum="0.001"/>
+               </h:inputText>
+            </div>
+
+            <div class="section-top">
+               <h:commandButton value="💾 Сохранить" action="#{editRingBean.updateRing}" styleClass="btn btn-primary"/>
+               <h:link outcome="view-ring" value="❌ Отмена" styleClass="btn btn-secondary">
+                  <f:param name="id" value="#{editRingBean.ring.id}"/>
+               </h:link>
+            </div>
+         </h:form>
+      </ui:fragment>
+
+      <ui:fragment rendered="#{editRingBean.ring == null}">
+         <p class="text-danger">Кольцо с ID #{editRingBean.ringId} не найдено.</p>
+      </ui:fragment>
+   </div>
+</h:body>
+</html>
+
