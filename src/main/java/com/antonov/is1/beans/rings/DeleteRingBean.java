@@ -2,7 +2,7 @@ package com.antonov.is1.beans.rings;
 
 import com.antonov.is1.entities.Ring;
 import com.antonov.is1.services.RingDeletionService;
-import com.antonov.is1.services.RingDeletionAnalysis;
+import com.antonov.is1.utils.RingDeletionAnalysis;
 import com.antonov.is1.services.RingService;
 import lombok.Getter;
 import lombok.Setter;

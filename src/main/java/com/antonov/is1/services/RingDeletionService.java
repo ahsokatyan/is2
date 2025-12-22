@@ -4,20 +4,22 @@ import com.antonov.is1.entities.BookCreature;
 import com.antonov.is1.entities.Ring;
 import com.antonov.is1.repos.BookCreatureRepository;
 import com.antonov.is1.repos.RingRepository;
+import com.antonov.is1.utils.RingDeletionAnalysis;
 import com.antonov.is1.websocket.CreaturesWebSocket;
 
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
+import javax.inject.Inject;
 import java.util.List;
 import java.util.stream.Collectors;
 
 @Stateless
 public class RingDeletionService {
 
-    @EJB
+    @Inject
     private RingRepository ringRepo;
 
-    @EJB
+    @Inject
     private BookCreatureRepository bookCreatureRepo;
 
     /**

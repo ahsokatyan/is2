@@ -5,13 +5,14 @@ import com.antonov.is1.repos.CoordinatesRepository;
 
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
+import javax.inject.Inject;
 import java.util.List;
 import java.util.Optional;
 
 @Stateless
 public class CoordinatesService {
 
-    @EJB
+    @Inject
     private CoordinatesRepository coordinatesRepo;
 
     public Coordinates createCoordinates(Double x, Long y) {

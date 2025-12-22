@@ -3,7 +3,7 @@ package com.antonov.is1.beans.special;
 import com.antonov.is1.entities.BookCreature;
 import com.antonov.is1.entities.MagicCity;
 import com.antonov.is1.entities.Ring;
-import com.antonov.is1.services.AttackLevelDeletionAnalysis;
+import com.antonov.is1.utils.AttackLevelDeletionAnalysis;
 import com.antonov.is1.services.BookCreatureService;
 import com.antonov.is1.services.MagicCityService;
 import com.antonov.is1.services.RingService;

@@ -37,8 +37,8 @@ public class BookCreature {
     private java.time.LocalDate creationDate; //Поле не может быть null, Значение этого поля должно генерироваться автоматически
 
     @Column(nullable = false)
-    @NotNull(message = "Возраст не может быть null")
-    @Positive(message = "Возраст должен быть больше 0")
+    @NotNull(message = "age не может быть null")
+    @Positive(message = "age должен быть больше 0")
     private Long age; //Значение поля должно быть больше 0, Поле не может быть null
 
     @Enumerated(EnumType.STRING)
@@ -50,7 +50,7 @@ public class BookCreature {
     @JoinColumn(name = "magic_city_id")
     private MagicCity creatureLocation; //Поле может быть null
 
-    @Positive(message = "Уровень атаки должен быть больше 0")
+    @Positive(message = "attackLevel должен быть больше 0")
     @Column(name = "attack_level")
     private long attackLevel; //Значение поля должно быть больше 0
 

@@ -1,4 +1,4 @@
-package com.antonov.is1.services;
+package com.antonov.is1.utils;
 
 import com.antonov.is1.entities.BookCreature;
 import com.antonov.is1.entities.MagicCity;

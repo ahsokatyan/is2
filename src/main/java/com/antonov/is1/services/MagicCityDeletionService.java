@@ -4,20 +4,22 @@ import com.antonov.is1.entities.BookCreature;
 import com.antonov.is1.entities.MagicCity;
 import com.antonov.is1.repos.BookCreatureRepository;
 import com.antonov.is1.repos.MagicCityRepository;
+import com.antonov.is1.utils.MagicCityDeletionAnalysis;
 import com.antonov.is1.websocket.CreaturesWebSocket;
 
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
+import javax.inject.Inject;
 import java.util.List;
 import java.util.stream.Collectors;
 
 @Stateless
 public class MagicCityDeletionService {
 
-    @EJB
+    @Inject
     private MagicCityRepository magicCityRepo;
 
-    @EJB
+    @Inject
     private BookCreatureRepository bookCreatureRepo;
 
     /**

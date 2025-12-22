@@ -2,7 +2,7 @@ package com.antonov.is1.beans.creatures;
 
 import com.antonov.is1.entities.BookCreature;
 import com.antonov.is1.services.BookCreatureDeletionService;
-import com.antonov.is1.services.BookCreatureDeletionAnalysis;
+import com.antonov.is1.utils.BookCreatureDeletionAnalysis;
 import com.antonov.is1.services.BookCreatureService;
 import lombok.Getter;
 import lombok.Setter;

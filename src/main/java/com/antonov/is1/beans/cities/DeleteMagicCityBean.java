@@ -2,7 +2,7 @@ package com.antonov.is1.beans.cities;
 
 import com.antonov.is1.entities.MagicCity;
 import com.antonov.is1.services.MagicCityDeletionService;
-import com.antonov.is1.services.MagicCityDeletionAnalysis;
+import com.antonov.is1.utils.MagicCityDeletionAnalysis;
 import com.antonov.is1.services.MagicCityService;
 import lombok.Getter;
 import lombok.Setter;

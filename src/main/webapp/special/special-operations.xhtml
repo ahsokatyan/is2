@@ -19,10 +19,10 @@
         <!-- Навигация -->
         <div class="section-bottom">
             <h:form>
-                <h:commandButton value="🏠 Главная" action="index" styleClass="btn"/>
-                <h:commandButton value="📖 Существа" action="creatures" styleClass="btn"/>
-                <h:commandButton value="🏙️ Города" action="cities" styleClass="btn"/>
-                <h:commandButton value="💍 Кольца" action="rings" styleClass="btn"/>
+                <h:commandButton value="🏠 Главная" action="#{navigationBean.goToHome}" styleClass="btn"/>
+                <h:commandButton value="📖 Существа" action="#{navigationBean.goToCreatures}" styleClass="btn"/>
+                <h:commandButton value="🏙️ Города" action="#{navigationBean.goToCities}" styleClass="btn"/>
+                <h:commandButton value="💍 Кольца" action="#{navigationBean.goToRings}" styleClass="btn"/>
             </h:form>
         </div>
 
@@ -47,7 +47,7 @@
                 <div class="form-group">
                     <h:outputLabel for="attackLevel" value="Значение attackLevel:"/>
                     <h:inputText id="attackLevel" value="#{specialOperationsBean.attackLevelToDelete}"
-                                 required="true" styleClass="input-short">
+                                 required="true" styleClass="input-short" label="Значение attackLevel">
                         <f:validateLongRange minimum="1"/>
                     </h:inputText>
                 </div>

@@ -3,10 +3,12 @@ package com.antonov.is1.services;
 
 import com.antonov.is1.entities.*;
 import com.antonov.is1.repos.*;
+import com.antonov.is1.utils.AttackLevelDeletionAnalysis;
 import com.antonov.is1.websocket.CreaturesWebSocket;
 
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
+import javax.inject.Inject;
 import javax.persistence.EntityNotFoundException;
 import java.util.List;
 import java.util.Optional;
@@ -15,16 +17,16 @@ import java.util.stream.Collectors;
 @Stateless
 public class BookCreatureService {
 
-    @EJB
+    @Inject
     private BookCreatureRepository bookCreatureRepo;
 
-    @EJB
+    @Inject
     private CoordinatesRepository coordinatesRepo;
 
-    @EJB
+    @Inject
     private MagicCityRepository magicCityRepo;
 
-    @EJB
+    @Inject
     private RingRepository ringRepo;
 
 

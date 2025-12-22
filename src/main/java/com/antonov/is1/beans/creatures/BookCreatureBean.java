@@ -271,17 +271,17 @@ public class BookCreatureBean implements Serializable {
         try {
             // Валидация обязательных полей
             if (newCreature.getName() == null || newCreature.getName().trim().isEmpty()) {
-                addMessage("Ошибка", "Имя обязательно");
+                addMessage("Ошибка", "name не может быть null ");
                 return null;
             }
 
             if (newCreature.getAge() == null || newCreature.getAge() <= 0) {
-                addMessage("Ошибка", "Возраст должен быть больше 0");
+                addMessage("Ошибка", "age должен быть больше 0");
                 return null;
             }
 
             if (newCreature.getCoordinates() == null) {
-                addMessage("Ошибка", "Координаты обязательны");
+                addMessage("Ошибка", "coordinates обязательны");
                 return null;
             }
 

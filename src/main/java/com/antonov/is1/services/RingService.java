@@ -7,13 +7,14 @@ import com.antonov.is1.websocket.CreaturesWebSocket;
 
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
+import javax.inject.Inject;
 import java.util.List;
 import java.util.Optional;
 
 @Stateless
 public class RingService {
 
-    @EJB
+    @Inject
     private RingRepository ringRepo;
 
     public Ring createRing(String name, Long power, Double weight) {

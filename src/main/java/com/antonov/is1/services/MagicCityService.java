@@ -9,6 +9,7 @@ import com.antonov.is1.websocket.CreaturesWebSocket;
 
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
+import javax.inject.Inject;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
@@ -16,7 +17,7 @@ import java.util.Optional;
 @Stateless
 public class MagicCityService {
 
-    @EJB
+    @Inject
     private MagicCityRepository magicCityRepo;
 
     public MagicCity createMagicCity(String name, Float area, Long population,
