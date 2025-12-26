@@ -23,7 +23,7 @@
             <h:link outcome="creatures" value="← Назад к списку" styleClass="btn"/>
         </div>
 
-        <h:messages styleClass="messages"/>
+        <h:messages styleClass="messages" showSummary="true" showDetail="true"/>
         <ui:fragment rendered="#{viewCreatureBean.creature != null}">
         <div>
             <table class="details-table">

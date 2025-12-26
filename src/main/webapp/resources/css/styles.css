@@ -45,6 +45,14 @@ input[type="checkbox"] { width: auto; }
 .messages { color: red; margin: 10px 0; }
 .text-muted { color: #666; }
 .text-danger { color: red; }
+.notice-danger { color: #b00000; font-weight: bold; font-size: 18px; text-transform: uppercase; }
+.notice-box { background: #f8d7da; border: 2px solid #b00000; color: #8b0000; font-weight: bold; font-size: 18px; padding: 16px; border-radius: 6px; text-transform: uppercase; }
+
+.admin-mode { background: #f7d6d9; }
+.admin-mode .btn { background: #dc3545; color: white; }
+.admin-mode .btn-secondary { background: #b02a37; }
+.admin-mode .btn-accent { background: #a71d2a; }
+.admin-mode .table th { background-color: #f1b0b7; }
 
 .pagination { margin: 20px 0; text-align: center; padding: 15px; background: #f8f9fa; border-radius: 5px; }
 .pagination .btn { margin: 0 5px; padding: 8px 12px; background: #fff; border: 1px solid #dee2e6; color: #007bff; }

@@ -32,12 +32,14 @@ build/
 !**/src/main/**/build/
 !**/src/test/**/build/
 
-src/main/java/com/antonov/is1/HelloServlet.java
-src/main/java/com/antonov/is1/TestRepos.java
-src/main/java/com/antonov/is1/TestServices.java
-src/main/java/com/antonov/is1/TestServlet.java
+src/main/java/com/antonov/is2/HelloServlet.java
+src/main/java/com/antonov/is2/TestRepos.java
+src/main/java/com/antonov/is2/TestServices.java
+src/main/java/com/antonov/is2/TestServlet.java
 ### VS Code ###
 .vscode/
 
 ### Mac OS ###
 .DS_Store
+
+jmeter/

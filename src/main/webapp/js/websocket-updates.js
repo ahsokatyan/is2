@@ -4,7 +4,7 @@ let reconnectInterval;
 
 function connectWebSocket() {
     const protocol = window.location.protocol === 'https:' ? 'wss:' : 'ws:';
-    const wsUri = protocol + '//' + window.location.host + '/is1-1.0-SNAPSHOT/creatures-updates';
+    const wsUri = protocol + '//' + window.location.host + '/is2-1.0-SNAPSHOT/creatures-updates';
     
     websocket = new WebSocket(wsUri);
     

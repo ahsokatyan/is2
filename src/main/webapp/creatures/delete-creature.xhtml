@@ -24,7 +24,7 @@
             <h:link outcome="creatures" value="← Назад к списку" styleClass="btn btn-secondary"/>
         </div>
 
-        <h:messages/>
+        <h:messages styleClass="messages" showSummary="true" showDetail="true"/>
 
         <ui:fragment rendered="#{deleteCreatureBean.creature != null}">
             <div class="warning-box">
@@ -56,8 +56,8 @@
                 </tr>
             </table>
 
-            <h:form>
-                <h:commandButton value="✅ Подтвердить удаление"
+            <h:form id="deleteForm">
+                <h:commandButton id="confirmDeleteBtn" value="✅ Подтвердить удаление"
                                  action="#{deleteCreatureBean.initiateDeletion}"
                                  styleClass="btn btn-danger"/>
 

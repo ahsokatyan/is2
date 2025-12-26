@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+<f:view>
+    <h:head>
+        <title>Администрирование пользователей</title>
+        <h:outputStylesheet library="css" name="styles.css"/>
+    </h:head>
+    <h:body styleClass="#{userSessionBean.admin ? 'admin-mode' : ''}">
+        <div class="container">
+            <h1>Администрирование пользователей</h1>
+
+            <h:panelGroup rendered="#{not userSessionBean.admin}">
+                <div class="card">
+                    <p class="text-danger">Доступ только для администраторов.</p>
+                    <h:form>
+                        <h:commandButton value="На главную" action="#{navigationBean.goToHome}"
+                                         styleClass="btn btn-secondary"/>
+                    </h:form>
+                </div>
+            </h:panelGroup>
+
+            <h:panelGroup rendered="#{userSessionBean.admin}">
+                <div class="card">
+                    <h2>Создать пользователя</h2>
+                    <h:form>
+                        <div class="form-grid">
+                            <div class="form-group">
+                                <h:outputLabel for="newLogin" value="Логин"/>
+                                <h:inputText id="newLogin" value="#{adminUsersBean.newLogin}"/>
+                            </div>
+                            <div class="form-group">
+                                <h:outputLabel for="newName" value="Имя"/>
+                                <h:inputText id="newName" value="#{adminUsersBean.newName}"/>
+                            </div>
+                            <div class="form-group">
+                                <h:outputLabel for="newPassword" value="Пароль"/>
+                                <h:inputSecret id="newPassword" value="#{adminUsersBean.newPassword}"/>
+                            </div>
+                            <div class="form-group">
+                                <h:outputLabel for="newRole" value="Роль"/>
+                                <h:selectOneMenu id="newRole" value="#{adminUsersBean.newRole}">
+                                    <f:selectItems value="#{adminUsersBean.roles}"/>
+                                </h:selectOneMenu>
+                            </div>
+                        </div>
+                        <h:commandButton value="Создать" action="#{adminUsersBean.createUser}"
+                                         styleClass="btn btn-danger"/>
+                    </h:form>
+                </div>
+
+                <div class="card">
+                    <h2>Ожидают подтверждения</h2>
+                    <h:panelGroup rendered="#{empty adminUsersBean.pendingUsers}">
+                        <p class="text-muted">Нет заявок.</p>
+                    </h:panelGroup>
+                    <h:panelGroup rendered="#{not empty adminUsersBean.pendingUsers}">
+                        <table class="table">
+                            <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Логин</th>
+                                <th>Имя</th>
+                                <th>Действия</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <ui:repeat value="#{adminUsersBean.pendingUsers}" var="user">
+                                <tr>
+                                    <td>#{user.id}</td>
+                                    <td>#{user.login}</td>
+                                    <td>#{user.name}</td>
+                                    <td>
+                                        <h:form styleClass="inline-form">
+                                            <h:commandButton value="Подтвердить USER"
+                                                             action="#{adminUsersBean.approveUser(user.id, 'USER')}"
+                                                             styleClass="btn btn-secondary"/>
+                                            <h:commandButton value="Подтвердить ADMIN"
+                                                             action="#{adminUsersBean.approveUser(user.id, 'ADMIN')}"
+                                                             styleClass="btn btn-danger"/>
+                                        </h:form>
+                                    </td>
+                                </tr>
+                            </ui:repeat>
+                            </tbody>
+                        </table>
+                    </h:panelGroup>
+                </div>
+
+                <div class="card">
+                    <h2>Все пользователи</h2>
+                    <table class="table">
+                        <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Логин</th>
+                            <th>Имя</th>
+                            <th>Роль</th>
+                            <th>Подтвержден</th>
+                            <th>Действия</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <ui:repeat value="#{adminUsersBean.allUsers}" var="user">
+                            <tr>
+                                <td>#{user.id}</td>
+                                <td>#{user.login}</td>
+                                <td>#{user.name}</td>
+                                <td>#{user.role}</td>
+                                    <td>#{user.approved}</td>
+                                    <td>
+                                        <h:form styleClass="inline-form">
+                                            <h:commandButton value="Сделать USER"
+                                                             action="#{adminUsersBean.updateRole(user.id, 'USER')}"
+                                                             rendered="#{user.role ne 'ADMIN'}"
+                                                             styleClass="btn btn-secondary"/>
+                                            <h:commandButton value="Сделать ADMIN"
+                                                             action="#{adminUsersBean.updateRole(user.id, 'ADMIN')}"
+                                                             rendered="#{user.role ne 'ADMIN'}"
+                                                             styleClass="btn btn-danger"/>
+                                        </h:form>
+                                    </td>
+                                </tr>
+                        </ui:repeat>
+                        </tbody>
+                    </table>
+                </div>
+
+                <h:form>
+                    <h:commandButton value="На главную" action="#{navigationBean.goToHome}"
+                                     styleClass="btn btn-secondary"/>
+                </h:form>
+            </h:panelGroup>
+
+            <h:messages globalOnly="true" styleClass="messages"/>
+        </div>
+    </h:body>
+</f:view>
+</html>

@@ -8,10 +8,12 @@
 <!--        <jta-data-source>java:/PostgresDS</jta-data-source>-->
         <jta-data-source>java:/jdbc/postgresql</jta-data-source>
 
-        <class>com.antonov.is1.entities.BookCreature</class>
-        <class>com.antonov.is1.entities.Coordinates</class>
-        <class>com.antonov.is1.entities.MagicCity</class>
-        <class>com.antonov.is1.entities.Ring</class>
+        <class>com.antonov.is2.entities.BookCreature</class>
+        <class>com.antonov.is2.entities.Coordinates</class>
+        <class>com.antonov.is2.entities.MagicCity</class>
+        <class>com.antonov.is2.entities.Ring</class>
+        <class>com.antonov.is2.entities.ImportOperation</class>
+        <class>com.antonov.is2.entities.UserAccount</class>
         <properties>
             <property name="hibernate.dialect" value="org.hibernate.dialect.PostgreSQLDialect"/>
 

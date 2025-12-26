@@ -18,7 +18,7 @@
          <h:link outcome="creatures" value="← Назад к списку" styleClass="btn btn-secondary"/>
       </div>
 
-      <h:messages styleClass="messages"/>
+      <h:messages styleClass="messages" showSummary="true" showDetail="true"/>
 
       <h:form id="createForm">
          <div class="form-grid">
@@ -90,7 +90,7 @@
          </div>
 
          <div class="section-top">
-            <h:commandButton value="💾 Создать существо"
+         <h:commandButton id="createBtn" value="💾 Создать существо"
                              action="#{bookCreatureBean.createCreatureInSeparatePage}"
                              styleClass="btn btn-primary"/>
             <h:link outcome="creatures" value="❌ Отмена" styleClass="btn btn-secondary"/>

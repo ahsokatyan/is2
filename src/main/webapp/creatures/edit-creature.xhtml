@@ -23,7 +23,7 @@
          <h:link outcome="creatures" value="← Назад к списку" styleClass="btn btn-secondary"/>
       </div>
 
-      <h:messages styleClass="messages"/>
+      <h:messages styleClass="messages" showSummary="true" showDetail="true"/>
 
       <ui:fragment rendered="#{editCreatureBean.creature != null}">
       <div>
@@ -75,7 +75,7 @@
             </div>
 
             <div class="section-top">
-               <h:commandButton value="💾 Сохранить" action="#{editCreatureBean.updateCreature}" styleClass="btn btn-primary"/>
+               <h:commandButton id="saveBtn" value="💾 Сохранить" action="#{editCreatureBean.updateCreature}" styleClass="btn btn-primary"/>
                <h:link outcome="view-creature" value="❌ Отмена" styleClass="btn btn-secondary">
                   <f:param name="id" value="#{editCreatureBean.creature.id}"/>
                </h:link>

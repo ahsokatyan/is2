@@ -10,7 +10,7 @@
         <title>Book Creature System</title>
         <h:outputStylesheet library="css" name="styles.css"/>
     </h:head>
-    <h:body>
+    <h:body styleClass="#{userSessionBean.admin ? 'admin-mode' : ''}">
         <h1>🏰 Система управления книжными существами</h1>
 
         <div class="section">
@@ -20,8 +20,90 @@
                 <h:commandButton value="💍 Управление кольцами" action="#{navigationBean.goToRings}" styleClass="btn btn-lg"/>
                 <h:commandButton value="⚡ Специальные операции" action="#{navigationBean.goToSpecialOperations}"
                                  styleClass="btn btn-lg btn-accent"/>
+                <h:commandButton value="📥 Импорт и история" action="#{navigationBean.goToImports}"
+                                 styleClass="btn btn-lg btn-primary"/>
+                <h:commandButton value="👥 Администрирование пользователей" action="#{navigationBean.goToAdminUsers}"
+                                 rendered="#{userSessionBean.admin}" styleClass="btn btn-lg btn-danger"/>
             </h:form>
         </div>
+
+        <h:panelGroup rendered="#{userSessionBean.loggedIn}">
+
+            <div class="section">
+                <div class="card">
+                    <h2>Профиль</h2>
+                    <p class="text-muted">Вы вошли как #{userSessionBean.username} (#{userSessionBean.name}).</p>
+                    <h:form>
+                        <div class="form-grid">
+                            <div class="form-group">
+                                <h:outputLabel for="oldPassword" value="Текущий пароль"/>
+                                <h:inputSecret id="oldPassword" value="#{userSessionBean.oldPassword}"/>
+                            </div>
+                            <div class="form-group">
+                                <h:outputLabel for="newPassword" value="Новый пароль"/>
+                                <h:inputSecret id="newPassword" value="#{userSessionBean.newPassword}"/>
+                            </div>
+                        </div>
+                        <h:commandButton value="Сменить пароль" action="#{userSessionBean.changePassword}"
+                                         styleClass="btn btn-primary"/>
+                        <h:commandButton value="Выйти" action="#{userSessionBean.logout}"
+                                         styleClass="btn btn-secondary"/>
+                    </h:form>
+                </div>
+            </div>
+        </h:panelGroup>
+
+        <h:panelGroup rendered="#{not userSessionBean.loggedIn}">
+            <div class="section">
+                <div class="notice-box">
+                    ОПЕРАЦИИ ИМПОРТИРОВАНИЯ ФАЙЛОВ МОГУТ СОВЕРШАТЬ ТОЛЬКО АВТОРИЗОВАННЫЕ ПОЛЬЗОВАТЕЛИ.
+                    ОНИ МОГУТ ПРОСМАТРИВАТЬ СВОИ ОПЕРАЦИИ ИМПОРТА.
+                    ЕСЛИ ВЫ ЕЩЕ НЕ АВТОРИЗОВАНЫ — АВТОРИЗУЙТЕСЬ.
+                    ЕСЛИ НЕ ЗАРЕГИСТРИРОВАНЫ — ОТПРАВЬТЕ ЗАЯВКУ НА РЕГИСТРАЦИЮ ДЛЯ РАССМОТРЕНИЯ АДМИНИСТРАТОРАМИ.
+                </div>
+                <div class="card">
+                    <h2>Вход</h2>
+                    <h:form id="loginForm">
+                        <div class="form-grid">
+                            <div class="form-group">
+                                <h:outputLabel for="login" value="Логин"/>
+                                <h:inputText id="login" value="#{userSessionBean.login}"/>
+                            </div>
+                            <div class="form-group">
+                                <h:outputLabel for="password" value="Пароль"/>
+                                <h:inputSecret id="password" value="#{userSessionBean.password}"/>
+                            </div>
+                        </div>
+                        <h:commandButton id="loginBtn" value="Войти" action="#{userSessionBean.login}"
+                                         styleClass="btn btn-primary"/>
+                    </h:form>
+                </div>
+            </div>
+
+            <div class="section">
+                <div class="card-muted">
+                    <h2>Регистрация пользователя</h2>
+                    <h:form id="registerForm">
+                        <div class="form-grid">
+                            <div class="form-group">
+                                <h:outputLabel for="regLogin" value="Логин"/>
+                                <h:inputText id="regLogin" value="#{userSessionBean.registerLogin}"/>
+                            </div>
+                            <div class="form-group">
+                                <h:outputLabel for="regName" value="Имя"/>
+                                <h:inputText id="regName" value="#{userSessionBean.registerName}"/>
+                            </div>
+                            <div class="form-group">
+                                <h:outputLabel for="regPassword" value="Пароль"/>
+                                <h:inputSecret id="regPassword" value="#{userSessionBean.registerPassword}"/>
+                            </div>
+                        </div>
+                        <h:commandButton id="registerBtn" value="Отправить заявку" action="#{userSessionBean.register}"
+                                         styleClass="btn btn-warning"/>
+                    </h:form>
+                </div>
+            </div>
+        </h:panelGroup>
 
         <h:messages globalOnly="true" styleClass="messages"/>
     </h:body>

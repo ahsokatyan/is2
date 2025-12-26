@@ -5,9 +5,9 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>com.antonov</groupId>
-    <artifactId>is1</artifactId>
+    <artifactId>is2</artifactId>
     <version>1.0-SNAPSHOT</version>
-    <name>is1</name>
+    <name>is2</name>
     <packaging>war</packaging>
 
     <properties>
